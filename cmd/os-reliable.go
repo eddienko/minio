@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	cp "github.com/otiai10/copy"
 )
 
 // Wrapper functions to os.RemoveAll, which calls reliableRemoveAll
@@ -145,8 +146,11 @@ func renameAll(srcFilePath, dstFilePath string) (err error) {
 			// windows, because windows API does not return "not a
 			// directory" error message. Handle this specifically here.
 			return errFileAccessDenied
-		case isSysErrCrossDevice(err):
-			return fmt.Errorf("%w (%s)->(%s)", errCrossDeviceLink, srcFilePath, dstFilePath)
+		case isSysErrCrossDevice(err):			
+			if err = cp.Copy(srcFilePath, dstFilePath); err != nil {
+				return fmt.Errorf("%w (%s)->(%s)", errCrossDeviceLink, srcFilePath, dstFilePath)
+			}
+			os.RemoveAll(srcFilePath)
 		case osIsNotExist(err):
 			return errFileNotFound
 		case osIsExist(err):
@@ -157,6 +161,7 @@ func renameAll(srcFilePath, dstFilePath string) (err error) {
 			return err
 		}
 	}
+
 	return nil
 }
 

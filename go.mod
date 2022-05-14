@@ -180,6 +180,7 @@ require (
 	github.com/navidys/tvxwidgets v0.1.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
+	github.com/otiai10/copy v1.7.0 // indirect
 	github.com/pkg/xattr v0.4.5 // indirect
 	github.com/posener/complete v1.2.3 // indirect
 	github.com/power-devops/perfstat v0.0.0-20220216144756-c35f1ee13d7c // indirect
